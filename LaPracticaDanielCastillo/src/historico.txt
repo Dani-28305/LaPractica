@@ -1,0 +1,57 @@
+sara 0 CPU0 2 
+ma 2 aman 1 am 0 
+
+default 0 
+am 0 ma 0 
+ma 0 am 1 
+am 0 ma 0 
+am 0 ma 0 
+ma 0 am 0 
+ma 0 am 0 
+ma 0 am 1 
+default 0 
+am 1 ma 1 
+ma 0 am 0 
+ma 0 am 0 
+am 0 ma 0 
+default 0 
+ma 0 am 0 
+am 0 ma 0 
+ma 0 am 1 
+am 0 ma 1 
+amanda 0 
+amanda 0 
+amanda 1 
+amanda 1 
+default 0 
+PEPE 0 AMANDA 1 
+am 0 ma 0 
+am 0 ma 0 
+ma 0 am 0 
+ma 0 am 0 
+ma 0 am 0 
+am 0 ma 0 
+ma 0 am 0 
+am 1 ma 0 
+ma 0 am 1 
+ma 0 am 0 
+ma 1 am 0 
+am 0 ma 0 
+am 0 ma 0 
+am 1 ma 0 
+ma 1 am 0 
+ma 0 am 0 
+ma 3 am 1 
+jose 1 ra 0 
+am 0 jose 0 
+am 1 
+am 0 CPU0 0 
+am 0 
+default 0 
+default 0 
+am 0 ma 0 
+ra 0 ma 0 ar 0 am 0 jose 0 
+jose 0 am 0 ma 0 ra 0 
+CPU1 1 jose 0 
+ar 0 jose 2 daniel 0 
+default 0 
