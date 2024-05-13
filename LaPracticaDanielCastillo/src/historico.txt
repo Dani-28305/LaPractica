@@ -55,3 +55,9 @@ jose 0 am 0 ma 0 ra 0
 CPU1 1 jose 0 
 ar 0 jose 2 daniel 0 
 default 0 
+daniel 0 daniel 0 
+jose 1 daniel 0 
+dani 0 danie 0 
+dani 0 danie 1 
+cpue 0 danie 0 da2od2 0 
+danie 0 

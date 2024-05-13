@@ -9,7 +9,11 @@ import java.util.ArrayList;
 
 import jugadores.Humanos;
 import jugadores.Jugadores;
-
+/**
+ * Clase para gestionar el log del programa
+ * @author Daniel Castillo 
+ * @version 20240513
+ */
 public class GestionLog {
 	static String fecha = "[" + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 	static String fechaHora = "[" + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "]" + "["
@@ -133,11 +137,14 @@ public class GestionLog {
 			FalloLog(e.getMessage());
 		}
 	}
-
+/**
+ * Método para añadir al log cuadno sucede un fallo en el programa
+ * @param fallo Parámetro que contien el fallo que se a producido
+ */
 	public static void FalloLog(String fallo) {
 		try {
 			comprobarFecha();
-			String escribir = fechaHora + "Se ha producido un error en la aplicacion: " + fallo;
+			String escribir = fechaHora + "Se ha producido un error en la aplicacion: " + fallo + "\n";
 			Files.write(Constantes.archivoLogGeneral, escribir.getBytes(), StandardOpenOption.APPEND);
 		} catch (Exception e) {
 			System.out.println(Constantes.falloLog);

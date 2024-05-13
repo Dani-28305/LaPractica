@@ -13,16 +13,24 @@ import java.util.Scanner;
 import main.Constantes;
 import main.GestionLog;
 import main.GestionRanking;
-
+/**
+ * Clase para gestionar los jugadores Humanpos de las partidas
+ */
 public class Humanos extends Jugadores {
 	// static File archivoJugadores = new File("src/jugadores.txt");
 
 	String comprobarExiste;
-
+/**
+ * onstructor de la clase Humanos
+ * @param puntos Parámetro que contiene los puntos de cada jugador durante la partida
+ * @param nombre Parámetro que conteien el nombre del jugador Humano
+ */
 	public Humanos(int puntos, String nombre) {
 		super(puntos, nombre);
 	}
-
+/**
+ * Método para enseñar todos los jugadores registrados en el programa
+ */
 	public static void ensenarJugadores() {
 		try {
 			ArrayList<String> nombresJugadores = (ArrayList<String>) Files.readAllLines(Constantes.archivoJugadores);
@@ -35,14 +43,19 @@ public class Humanos extends Jugadores {
 			GestionLog.FalloLog(e.getMessage());
 		}
 	}
-
-	public static void crearJugador(String nombre) {
+/**
+ * Método para añadir jugadores al programa 
+ */
+	public static void crearJugador() {
+		Scanner s1 = new Scanner(System.in);
+		System.out.println("Dime el nombre del jugador que quieres crear sin espacios");
 		boolean existeJugador = false;
+		String nuevoJugador = s1.next();
+		nuevoJugador=Constantes.quitarEspacios(nuevoJugador);
 		try {
 			ArrayList<String> nombresJugadores = (ArrayList<String>) Files.readAllLines(Constantes.archivoJugadores);
-
 			for (String n : nombresJugadores) {
-				if (n.equalsIgnoreCase(nombre)) {
+				if (n.equalsIgnoreCase(nuevoJugador)) {
 					existeJugador = true;
 				}
 			}
@@ -52,12 +65,16 @@ public class Humanos extends Jugadores {
 			GestionLog.FalloLog(e.getMessage());
 
 		}
-		if (!existeJugador && !nombre.equals("default")) {
+		//TODO Expresion regular para no crear jugadores cpu
+		if (nuevoJugador.matches("[Cc][Pp][Uu]\\b")) {
+			System.out.println("pene");
+		}
+		if (!existeJugador && !nuevoJugador.equals("default")) {
 			try {
-				GestionRanking.nuevoJugadorRanking(nombre + " 0\n");
-				GestionLog.AnadirJugadorLog(nombre);
-				nombre += '\n';
-				Files.write(Constantes.archivoJugadores, nombre.getBytes(), StandardOpenOption.APPEND);
+				GestionRanking.nuevoJugadorRanking(nuevoJugador + " 0\n");
+				GestionLog.AnadirJugadorLog(nuevoJugador);
+				nuevoJugador += '\n';
+				Files.write(Constantes.archivoJugadores, nuevoJugador.getBytes(), StandardOpenOption.APPEND);
 				System.out.println("Jugador creado con exito");
 			} catch (Exception e) {
 				System.out.println("Fallo al añadir el jugador");
@@ -68,7 +85,10 @@ public class Humanos extends Jugadores {
 			System.out.println("Jugador ya existente");
 
 	}
-
+/**
+ * Metodo para eliminar jugadores del programa
+ * @param nombre Parámetro que contiene el nombre del jugador a eliminar del programa
+ */
 	public static void eliminarJugador(String nombre) {
 		boolean existeJugador = false;
 		try {
@@ -101,7 +121,9 @@ public class Humanos extends Jugadores {
 		GestionLog.EliminarJugadorLog(nombre);
 
 	}
-
+/**
+ * Metodo heredado para mostrar la informacion de los jugadores Humanos
+ */
 	@Override
 	public void mostrar() {
 		System.out.println("Nombre del jugador : " + this.nombre);

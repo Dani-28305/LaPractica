@@ -27,7 +27,8 @@ public class GestionPartida {
 	 */
 	private static int numRondas() {
 		Scanner s1 = new Scanner(System.in);
-		int numero;
+		String numero;
+		int numeroInt=0;
 		try {
 
 			System.out.println("Dime que tipo de partida quieres jugar");
@@ -36,26 +37,28 @@ public class GestionPartida {
 			System.out.println("3. Partida Normal");
 			System.out.println("4. Partida Larga");
 
-			numero = s1.nextInt();
-			if (numero < 5 && numero > 0)
-				if (numero == 1)
-					numero = 3;
-				else if (numero == 2)
-					numero = 5;
-				else if (numero == 3)
-					numero = 10;
-				else if (numero == 4)
-					numero = 20;
+			numero = s1.nextLine();
+			numero=Constantes.quitarEspacios(numero);
+			numeroInt=Integer.parseInt(numero);
+			if (numeroInt < 5 && numeroInt > 0)
+				if (numeroInt == 1)
+					numeroInt = 3;
+				else if (numeroInt == 2)
+					numeroInt = 5;
+				else if (numeroInt == 3)
+					numeroInt = 10;
+				else if (numeroInt == 4)
+					numeroInt = 20;
 				else {
 					System.out.println("Numero mal introducido, cargando partida rapida por defecto");
-					numero = 3;
+					numeroInt = 3;
 				}
 		} catch (Exception e) {
 			System.out.println("Numero mal introducido, cargando partida rapida por defecto");
-			numero = 1;
+			numeroInt = 3;
 			GestionLog.FalloLog(e.getMessage());
 		}
-		return numero;
+		return numeroInt;
 
 	}
 
@@ -74,56 +77,82 @@ public class GestionPartida {
 			}
 		}
 		if (ganador.getNombre().equalsIgnoreCase("default"))
-			//System.out.println("Empate en la partida");
-		return "Empate";
+			return "Empate";
 		else
 			return ganador.getNombre();
-			//System.out.println("El ganador de la partida a sido " + ganador.getNombre());
-	}
+		}
 
 	/**
 	 * Metodo privado para saber los jugadores de la partida
 	 * 
 	 * @return ArrayList con los jugadores que van a jugar la partida
 	 */
+	
+	//TODO duepurar metodo muy largo
 	private static ArrayList preguntarJugadores() {
+		int primerJugador = 0;
 		Scanner s1 = new Scanner(System.in);
-		boolean encontrado = false;
+		boolean encontrado = false, repetido = false;
 		ArrayList<Jugadores> jugadoresPartida = new ArrayList<Jugadores>();
 		try {
 			ArrayList<String> nombresJugadores = (ArrayList<String>) Files.readAllLines(Constantes.archivoJugadores);
 
 			System.out.println("¿Cuantos jugadores van a jugar?");
-			int numeroJugadores = s1.nextInt();
-			if (numeroJugadores > 4) {
+			String numeroJugadores = s1.nextLine();
+			numeroJugadores=Constantes.quitarEspacios(numeroJugadores);
+			int numeroJugadoresInt=Integer.parseInt(numeroJugadores);
+			if (numeroJugadoresInt > 4) {
 				System.out.println("El número maximo de jugadores por partida son 4, cambiando los jugadores a 4");
-				numeroJugadores = 4;
+				numeroJugadoresInt = 4;
 			}
 			System.out.println("¿Cuantos son humanos?");
-			int jugadoresHumanos = s1.nextInt();
-			if (jugadoresHumanos > numeroJugadores) {
+			String jugadoresHumanos = s1.nextLine();
+			jugadoresHumanos=Constantes.quitarEspacios(jugadoresHumanos);
+			int jugadoresHumanosInt = Integer.parseInt(jugadoresHumanos);
+			if (numeroJugadoresInt < jugadoresHumanosInt) {
 				System.out.println(
 						"Numero de Humanos superior al de jugadores, el numero de humanos pasara a ser el mismo que de jugadores");
 				jugadoresHumanos = numeroJugadores;
 			}
 			System.out.println("Dime el nombre de los jugadores");
-			for (int i = 0; i < jugadoresHumanos; i++) {
-				String jugador = s1.next();
+			for (int i = 0; i < jugadoresHumanosInt; i++) {
+				String jugador = s1.nextLine();
+				jugador=Constantes.quitarEspacios(jugador);
 				for (String n : nombresJugadores) {
 					if (n.equalsIgnoreCase(jugador)) {
-						jugadoresPartida.add(new Humanos(0, jugador));
-						encontrado = true;
-						System.out.println("Encontrado");
+						if (primerJugador < 1) {
+							jugadoresPartida.add(new Humanos(0, jugador));
+							encontrado = true;
+							System.out.println("Encontrado");
+							primerJugador++;
+						} else {
+							for (Jugadores m : jugadoresPartida) {
+								if (m.getNombre().equalsIgnoreCase(jugador)) {
+									System.out.println("Jugador ya añadido a la partida anteriormente");
+									encontrado = true;
+									repetido = true;
+									i--;
+								}
+							}
+								if(!repetido){
+								jugadoresPartida.add(new Humanos(0, jugador));
+								encontrado = true;
+								System.out.println("Encontrado");
+							}
+
+						}
 					}
 				}
 				if (!encontrado) {
-					System.out.println("Nombre no encontrado, vuelve a introducirlo");
+					System.out.println("Nombre no encontrado, introduce uno de los siguientes");
+					Humanos.ensenarJugadores();
 					i--;
 				}
 				encontrado = false;
+				repetido = false;
 			}
-			numeroJugadores -= jugadoresHumanos;
-			for (int i = 0; i < numeroJugadores; i++) {
+			numeroJugadoresInt -= jugadoresHumanosInt;
+			for (int i = 0; i < numeroJugadoresInt; i++) {
 				String nombre = "CPU" + (i + 1);
 				jugadoresPartida.add(new CPU(0, nombre));
 			}
@@ -183,7 +212,8 @@ public class GestionPartida {
 			}
 			if (ganador(jugadoresPartida).equals("Empate")) {
 				System.out.println("Empate");
-			}else	System.out.println("El ganador de la partida a sido "+ganador(jugadoresPartida));
+			} else
+				System.out.println("El ganador de la partida a sido " + ganador(jugadoresPartida));
 			GestionHistorico.escribirHistorico(jugadoresPartida);
 			GestionRanking.actualizarRanking(jugadoresPartida);
 			GestionLog.FinPartidaLog(rondas, ganador(jugadoresPartida), jugadoresPartida);

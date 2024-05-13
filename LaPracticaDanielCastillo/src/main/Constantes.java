@@ -59,4 +59,9 @@ public class Constantes {
 		System.out.println("3. Eliminar Jugadores");
 		System.out.println("4. Volver");
 	}
+	public static String quitarEspacios(String cadena) {
+		String[] trozos ;
+		trozos=cadena.split(" ");
+		return trozos[0];
+	}
 }

@@ -37,7 +37,6 @@ public class GestionRanking {
 	 * @param listaOrdenar Es el ArrayList que contiene los nombres de los jugadores
 	 *                     y sus puntos desordenados
 	 */
-	//TODO enseñar en clase
 	public static void ordenarRanking(ArrayList<String[]> listaOrdenar) {
 		Collections.sort(listaOrdenar, new Comparator<String[]>() {
 			public int compare(String[] p1, String[] p2) {
