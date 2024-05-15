@@ -8,10 +8,17 @@ import java.util.Random;
 import java.util.Scanner;
 
 import main.Constantes;
-
+/**
+ * Clase para gestionar las preguntas de Lengua
+ * @author Daniel Castillo 
+ * @version 20240514
+ */
 public class PreguntaLengua {
 	static ArrayList<String> arrayPreguntasLengua = new ArrayList<String>();
-
+/**
+ * Metodo para generar un ArrayList con todas las preguntas del fichero de diccionario.txt
+ * @throws FileNotFoundException Cuando no ha podido leer el archivo
+ */
 	public static void generarArrayPreguntas() throws FileNotFoundException {
 		File f1 = new File("src/diccionario.txt");
 		Scanner s1 = new Scanner(f1);
@@ -21,7 +28,10 @@ public class PreguntaLengua {
 		}
 		s1.close();
 	}
-
+/**
+ * Metodo para generar las preguntas de Lengua
+ * @return true si aciertas la pregunta
+ */
 	public static boolean generarPregunta() {
 		String respuesta;
 		char[] respuestaChar;

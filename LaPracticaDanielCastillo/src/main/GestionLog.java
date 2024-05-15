@@ -35,7 +35,7 @@ public class GestionLog {
 			}
 		} catch (Exception e) {
 			System.out.println(Constantes.falloLog);
-			FalloLog(e.getMessage());
+			falloLog(e.getMessage());
 		}
 	}
 
@@ -44,14 +44,14 @@ public class GestionLog {
 	 * 
 	 * @param nombre Parámetro que contiene el nombre del jugador creado
 	 */
-	public static void AnadirJugadorLog(String nombre) {
+	public static void anadirJugadorLog(String nombre) {
 		try {
 			comprobarFecha();
 			String escribir = fechaHora + "Jugador " + nombre + " añadido al programa \n";
 			Files.write(Constantes.archivoLogGeneral, escribir.getBytes(), StandardOpenOption.APPEND);
 		} catch (Exception e) {
 			System.out.println(Constantes.falloLog);
-			FalloLog(e.getMessage());
+			falloLog(e.getMessage());
 
 		}
 	}
@@ -62,14 +62,14 @@ public class GestionLog {
 	 * @param nombre Parámetro que conteien el nombre del jugador eliminado
 	 */
 
-	public static void EliminarJugadorLog(String nombre) {
+	public static void eliminarJugadorLog(String nombre) {
 		try {
 			comprobarFecha();
 			String escribir = fechaHora + "Jugador " + nombre + " borrado del programa \n";
 			Files.write(Constantes.archivoLogGeneral, escribir.getBytes(), StandardOpenOption.APPEND);
 		} catch (Exception e) {
 			System.out.println(Constantes.falloLog);
-			FalloLog(e.getMessage());
+			falloLog(e.getMessage());
 
 		}
 	}
@@ -82,7 +82,7 @@ public class GestionLog {
 	 * @param jugadoresPartida Parámetro que contiene el ArrayList de jugadores de
 	 *                         la partida
 	 */
-	public static void InicioPartidaLog(int rondas, ArrayList<Jugadores> jugadoresPartida) {
+	public static void inicioPartidaLog(int rondas, ArrayList<Jugadores> jugadoresPartida) {
 		int humanos = 0;
 		for (Jugadores n : jugadoresPartida) {
 			if (n instanceof Humanos) {
@@ -96,7 +96,7 @@ public class GestionLog {
 			Files.write(Constantes.archivoLogGeneral, escribir.getBytes(), StandardOpenOption.APPEND);
 		} catch (Exception e) {
 			System.out.println(Constantes.falloLog);
-			FalloLog(e.getMessage());
+			falloLog(e.getMessage());
 
 		}
 	}
@@ -110,7 +110,7 @@ public class GestionLog {
 	 * @param jugadoresPartida Parámetro que contiene el ArrayList de jugadores de
 	 *                         la partida
 	 */
-	public static void FinPartidaLog(int rondas, String ganador, ArrayList<Jugadores> jugadoresPartida) {
+	public static void finPartidaLog(int rondas, String ganador, ArrayList<Jugadores> jugadoresPartida) {
 		int humanos = 0;
 		for (Jugadores n : jugadoresPartida) {
 			if (n instanceof Humanos) {
@@ -134,14 +134,14 @@ public class GestionLog {
 			}
 		} catch (Exception e) {
 			System.out.println(Constantes.falloLog);
-			FalloLog(e.getMessage());
+			falloLog(e.getMessage());
 		}
 	}
 /**
  * Método para añadir al log cuadno sucede un fallo en el programa
  * @param fallo Parámetro que contien el fallo que se a producido
  */
-	public static void FalloLog(String fallo) {
+	public static void falloLog(String fallo) {
 		try {
 			comprobarFecha();
 			String escribir = fechaHora + "Se ha producido un error en la aplicacion: " + fallo + "\n";

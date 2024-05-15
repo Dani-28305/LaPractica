@@ -10,39 +10,38 @@ import preguntas.PreguntaIngles;
 import preguntas.PreguntaLengua;
 import preguntas.PreguntaMates;
 
-
+/**
+ * Clase Principal del programa donde se ejecuta todo
+ * 
+ * @author Daniel Castillo
+ * @version 202405014
+ */
 public class Main {
-
+	/**
+	 * Metodo main del programa
+	 * 
+	 * @throws IOException Cuando falla la entrada/salida
+	 */
 	public static void main(String[] args) throws IOException {
 		String decision = "";
 		int decisionInt = 0;
 		Scanner s1 = new Scanner(System.in);
 		Random r1 = new Random();
-		// Pruebas Jugadores
-//		Jugadores j1 = new Humanos(0, "pedro");
-//		Jugadores[] list = new Jugadores[4];
-//		list[1] = j1;
-//		System.out.println(list[1].toString());
-//		Humanos.crearJugador("ester");
-		// Pruebas Preguntas
-//		PreguntaMates.generarPregunta();
 		PreguntaLengua.generarArrayPreguntas();
 		PreguntaIngles.generarArrayPreguntas();
-//		PreguntaLengua.generarPregunta();
-//		PreguntaIngles.generarPregunta();
-		
+
 		do {
 			try {
 				Constantes.menuGeneral();
 				decision = s1.nextLine();
-				decision=Constantes.quitarEspacios(decision);
+				decision = Constantes.quitarEspacios(decision);
 				decisionInt = Integer.parseInt(decision);
-				if (decisionInt>5 || decisionInt<1)
+				if (decisionInt > 5 || decisionInt < 1)
 					System.out.println("Numero no valido");
 				else {
 					switch (decisionInt) {
 					case 1: {
-						
+
 						GestionPartida.jugarPartida();
 						break;
 					}
@@ -56,58 +55,58 @@ public class Main {
 					}
 					case 4: {
 						do {
-						Constantes.menuJugadores();
-						try {
-							decision=s1.nextLine();
-							decision = Constantes.quitarEspacios(decision);
-							decisionInt=Integer.parseInt(decision);
-							switch (decisionInt) {
-							case 1: {
-								Humanos.ensenarJugadores();
-								break;
-							}
-							case 2: {
-								try {
-									Humanos.crearJugador();
-								} catch (Exception e) {
-									System.out.println("Nombre mal introducido");
-									GestionLog.FalloLog(e.getMessage());
+							Constantes.menuJugadores();
+							try {
+								decision = s1.nextLine();
+								decision = Constantes.quitarEspacios(decision);
+								decisionInt = Integer.parseInt(decision);
+								switch (decisionInt) {
+								case 1: {
+									Humanos.ensenarJugadores();
+									break;
 								}
-								break;
-							}
-							case 3: {
-								System.out.println("Dime el nombre del jugador que quieres eliminar");
-								try {
-									String eliminarJugador = s1.nextLine();
-									eliminarJugador = Constantes.quitarEspacios(eliminarJugador);
-									Humanos.eliminarJugador(eliminarJugador);
-								} catch (Exception e) {
-									System.out.println("Nombre mal introducido");
-									GestionLog.FalloLog(e.getMessage());
+								case 2: {
+									try {
+										Humanos.crearJugador();
+									} catch (Exception e) {
+										System.out.println("Nombre mal introducido");
+										GestionLog.falloLog(e.getMessage());
+									}
+									break;
 								}
-								break;
-							}
-							case 4:{
-								
-								break;
-							}
-							}
+								case 3: {
+									System.out.println("Dime el nombre del jugador que quieres eliminar");
+									try {
+										String eliminarJugador = s1.nextLine();
+										eliminarJugador = Constantes.quitarEspacios(eliminarJugador);
+										Humanos.eliminarJugador(eliminarJugador);
+									} catch (Exception e) {
+										System.out.println("Nombre mal introducido");
+										GestionLog.falloLog(e.getMessage());
+									}
+									break;
+								}
+								case 4: {
 
-						} catch (Exception e) {
-							System.out.println("Introduce un número y que sea valido");
-							GestionLog.FalloLog(e.getMessage());
-						}
-					}while(decisionInt!=4);
+									break;
+								}
+								}
+
+							} catch (Exception e) {
+								System.out.println("Introduce un número y que sea valido");
+								GestionLog.falloLog(e.getMessage());
+							}
+						} while (decisionInt != 4);
 					}
-					break;
+						break;
 					}
 				}
 			} catch (Exception e) {
 				System.out.println("Introduce un número y que sea valido");
-				GestionLog.FalloLog(e.getMessage());
+				GestionLog.falloLog(e.getMessage());
 			}
 
-		} while (decisionInt!=5);
+		} while (decisionInt != 5);
 	}
 
 }

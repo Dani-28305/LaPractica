@@ -8,9 +8,16 @@ import main.Constantes;
 import main.GestionLog;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
-
+/**
+ * Clase de gestión de las preguntas de mates
+ * @author Daniel Castillo
+ * @version 20240514
+ */
 public class PreguntaMates {
-
+/**
+ * Método para generar las preguntas de Mates
+ * @return true si aciertas la pregunta
+ */
 	public static boolean generarPregunta() {
 		String[] operaciones = new String[3];
 		int numeroRandom, n = 0;
@@ -50,7 +57,7 @@ public class PreguntaMates {
 			}
 		} catch (Exception e2) {
 			System.out.println("Fallo, no has introducido un numero correctamente");
-			GestionLog.FalloLog(e2.getMessage());
+			GestionLog.falloLog(e2.getMessage());
 			return false;
 		}
 

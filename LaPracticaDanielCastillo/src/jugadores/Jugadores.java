@@ -1,6 +1,8 @@
 package jugadores;
+
 /**
  * Clase abstracta para crear las clases Humanos y CPU
+ * 
  * @author Daniel Castillo
  * @version 20240512
  * @see {@link CPU}
@@ -9,21 +11,25 @@ package jugadores;
 public abstract class Jugadores {
 	int puntos;
 	String nombre;
+
 	/**
 	 * Metodo abracto para mostrar la informacion de cada jugador
 	 */
 	public abstract void mostrar();
+
 	/**
 	 * Constructo de los Jugadores
-	 * @param puntos Parametro que define los puntos que va atener un jugador en la partida
-	 * @param nombre Parametro que contiene el nombre del jugador 
+	 * 
+	 * @param puntos Parametro que define los puntos que va atener un jugador en la
+	 *               partida
+	 * @param nombre Parametro que contiene el nombre del jugador
 	 */
-	public Jugadores( int puntos, String nombre) {
+	public Jugadores(int puntos, String nombre) {
 		super();
 		this.puntos = puntos;
 		this.nombre = nombre;
 	}
-	
+
 	public int getPuntos() {
 		return puntos;
 	}
@@ -42,7 +48,7 @@ public abstract class Jugadores {
 
 	@Override
 	public String toString() {
-		return "Jugadores ["+" puntos=" + puntos + ", nombre=" + nombre + "]";
+		return "Jugadores [" + " puntos=" + puntos + ", nombre=" + nombre + "]";
 	}
 
 }

@@ -13,24 +13,26 @@ import java.util.Scanner;
 import main.Constantes;
 import main.GestionLog;
 import main.GestionRanking;
+
 /**
  * Clase para gestionar los jugadores Humanpos de las partidas
  */
 public class Humanos extends Jugadores {
-	// static File archivoJugadores = new File("src/jugadores.txt");
 
-	String comprobarExiste;
-/**
- * onstructor de la clase Humanos
- * @param puntos Parámetro que contiene los puntos de cada jugador durante la partida
- * @param nombre Parámetro que conteien el nombre del jugador Humano
- */
+	/**
+	 * Constructor de la clase Humanos
+	 * 
+	 * @param puntos Parámetro que contiene los puntos de cada jugador durante la
+	 *               partida
+	 * @param nombre Parámetro que conteien el nombre del jugador Humano
+	 */
 	public Humanos(int puntos, String nombre) {
 		super(puntos, nombre);
 	}
-/**
- * Método para enseñar todos los jugadores registrados en el programa
- */
+
+	/**
+	 * Método para enseñar todos los jugadores registrados en el programa
+	 */
 	public static void ensenarJugadores() {
 		try {
 			ArrayList<String> nombresJugadores = (ArrayList<String>) Files.readAllLines(Constantes.archivoJugadores);
@@ -40,18 +42,19 @@ public class Humanos extends Jugadores {
 			}
 		} catch (Exception e) {
 			System.out.println("Fallo al leer los jugadores");
-			GestionLog.FalloLog(e.getMessage());
+			GestionLog.falloLog(e.getMessage());
 		}
 	}
-/**
- * Método para añadir jugadores al programa 
- */
+
+	/**
+	 * Método para añadir jugadores al programa
+	 */
 	public static void crearJugador() {
 		Scanner s1 = new Scanner(System.in);
 		System.out.println("Dime el nombre del jugador que quieres crear sin espacios");
 		boolean existeJugador = false;
-		String nuevoJugador = s1.next();
-		nuevoJugador=Constantes.quitarEspacios(nuevoJugador);
+		String nuevoJugador = s1.nextLine();
+		nuevoJugador = Constantes.quitarEspacios(nuevoJugador);
 		try {
 			ArrayList<String> nombresJugadores = (ArrayList<String>) Files.readAllLines(Constantes.archivoJugadores);
 			for (String n : nombresJugadores) {
@@ -62,33 +65,32 @@ public class Humanos extends Jugadores {
 		} catch (Exception e) {
 			System.out.println("Fallo al leer los jugadores");
 			existeJugador = true;
-			GestionLog.FalloLog(e.getMessage());
+			GestionLog.falloLog(e.getMessage());
 
-		}
-		//TODO Expresion regular para no crear jugadores cpu
-		if (nuevoJugador.matches("[Cc][Pp][Uu]\\b")) {
-			System.out.println("pene");
 		}
 		if (!existeJugador && !nuevoJugador.equals("default")) {
 			try {
 				GestionRanking.nuevoJugadorRanking(nuevoJugador + " 0\n");
-				GestionLog.AnadirJugadorLog(nuevoJugador);
+				GestionLog.anadirJugadorLog(nuevoJugador);
 				nuevoJugador += '\n';
 				Files.write(Constantes.archivoJugadores, nuevoJugador.getBytes(), StandardOpenOption.APPEND);
 				System.out.println("Jugador creado con exito");
 			} catch (Exception e) {
 				System.out.println("Fallo al añadir el jugador");
-				GestionLog.FalloLog(e.getMessage());
+				GestionLog.falloLog(e.getMessage());
 
 			}
 		} else
 			System.out.println("Jugador ya existente");
 
 	}
-/**
- * Metodo para eliminar jugadores del programa
- * @param nombre Parámetro que contiene el nombre del jugador a eliminar del programa
- */
+
+	/**
+	 * Metodo para eliminar jugadores del programa
+	 * 
+	 * @param nombre Parámetro que contiene el nombre del jugador a eliminar del
+	 *               programa
+	 */
 	public static void eliminarJugador(String nombre) {
 		boolean existeJugador = false;
 		try {
@@ -110,20 +112,21 @@ public class Humanos extends Jugadores {
 				}
 			} catch (Exception e) {
 				System.out.println("Fallo al eliminar el jugador" + e.getMessage());
-				GestionLog.FalloLog(e.getMessage());
+				GestionLog.falloLog(e.getMessage());
 
 			}
 		} catch (Exception e) {
 			System.out.println("Fallo al leer los jugadores");
 			existeJugador = false;
-			GestionLog.FalloLog(e.getMessage());
+			GestionLog.falloLog(e.getMessage());
 		}
-		GestionLog.EliminarJugadorLog(nombre);
+		GestionLog.eliminarJugadorLog(nombre);
 
 	}
-/**
- * Metodo heredado para mostrar la informacion de los jugadores Humanos
- */
+
+	/**
+	 * Metodo heredado para mostrar la informacion de los jugadores Humanos
+	 */
 	@Override
 	public void mostrar() {
 		System.out.println("Nombre del jugador : " + this.nombre);

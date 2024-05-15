@@ -28,7 +28,7 @@ public class GestionPartida {
 	private static int numRondas() {
 		Scanner s1 = new Scanner(System.in);
 		String numero;
-		int numeroInt=0;
+		int numeroInt = 0;
 		try {
 
 			System.out.println("Dime que tipo de partida quieres jugar");
@@ -38,8 +38,8 @@ public class GestionPartida {
 			System.out.println("4. Partida Larga");
 
 			numero = s1.nextLine();
-			numero=Constantes.quitarEspacios(numero);
-			numeroInt=Integer.parseInt(numero);
+			numero = Constantes.quitarEspacios(numero);
+			numeroInt = Integer.parseInt(numero);
 			if (numeroInt < 5 && numeroInt > 0)
 				if (numeroInt == 1)
 					numeroInt = 3;
@@ -56,7 +56,7 @@ public class GestionPartida {
 		} catch (Exception e) {
 			System.out.println("Numero mal introducido, cargando partida rapida por defecto");
 			numeroInt = 3;
-			GestionLog.FalloLog(e.getMessage());
+			GestionLog.falloLog(e.getMessage());
 		}
 		return numeroInt;
 
@@ -80,15 +80,15 @@ public class GestionPartida {
 			return "Empate";
 		else
 			return ganador.getNombre();
-		}
+	}
 
 	/**
 	 * Metodo privado para saber los jugadores de la partida
 	 * 
 	 * @return ArrayList con los jugadores que van a jugar la partida
 	 */
-	
-	//TODO duepurar metodo muy largo
+
+	// TODO duepurar metodo muy largo
 	private static ArrayList preguntarJugadores() {
 		int primerJugador = 0;
 		Scanner s1 = new Scanner(System.in);
@@ -99,25 +99,25 @@ public class GestionPartida {
 
 			System.out.println("¿Cuantos jugadores van a jugar?");
 			String numeroJugadores = s1.nextLine();
-			numeroJugadores=Constantes.quitarEspacios(numeroJugadores);
-			int numeroJugadoresInt=Integer.parseInt(numeroJugadores);
+			numeroJugadores = Constantes.quitarEspacios(numeroJugadores);
+			int numeroJugadoresInt = Integer.parseInt(numeroJugadores);
 			if (numeroJugadoresInt > 4) {
 				System.out.println("El número maximo de jugadores por partida son 4, cambiando los jugadores a 4");
 				numeroJugadoresInt = 4;
 			}
 			System.out.println("¿Cuantos son humanos?");
 			String jugadoresHumanos = s1.nextLine();
-			jugadoresHumanos=Constantes.quitarEspacios(jugadoresHumanos);
+			jugadoresHumanos = Constantes.quitarEspacios(jugadoresHumanos);
 			int jugadoresHumanosInt = Integer.parseInt(jugadoresHumanos);
 			if (numeroJugadoresInt < jugadoresHumanosInt) {
 				System.out.println(
 						"Numero de Humanos superior al de jugadores, el numero de humanos pasara a ser el mismo que de jugadores");
-				jugadoresHumanos = numeroJugadores;
+				jugadoresHumanosInt = numeroJugadoresInt;
 			}
 			System.out.println("Dime el nombre de los jugadores");
 			for (int i = 0; i < jugadoresHumanosInt; i++) {
 				String jugador = s1.nextLine();
-				jugador=Constantes.quitarEspacios(jugador);
+				jugador = Constantes.quitarEspacios(jugador);
 				for (String n : nombresJugadores) {
 					if (n.equalsIgnoreCase(jugador)) {
 						if (primerJugador < 1) {
@@ -134,7 +134,7 @@ public class GestionPartida {
 									i--;
 								}
 							}
-								if(!repetido){
+							if (!repetido) {
 								jugadoresPartida.add(new Humanos(0, jugador));
 								encontrado = true;
 								System.out.println("Encontrado");
@@ -160,7 +160,7 @@ public class GestionPartida {
 			System.out.println(
 					"Error en la seleccion de jugadores, empezando con un jugador por defecto" + e.getMessage());
 			jugadoresPartida.add(new Humanos(0, "default"));
-			GestionLog.FalloLog(e.getMessage());
+			GestionLog.falloLog(e.getMessage());
 		}
 		return jugadoresPartida;
 	}
@@ -174,7 +174,7 @@ public class GestionPartida {
 		int numeroRandom;
 		Collections.shuffle(jugadoresPartida);
 		int rondas = numRondas();
-		GestionLog.InicioPartidaLog(rondas, jugadoresPartida);
+		GestionLog.inicioPartidaLog(rondas, jugadoresPartida);
 		try {
 			for (int i = 0; i < rondas; i++) {
 				System.out.println("Ronda número " + i + " de " + rondas);
@@ -216,11 +216,11 @@ public class GestionPartida {
 				System.out.println("El ganador de la partida a sido " + ganador(jugadoresPartida));
 			GestionHistorico.escribirHistorico(jugadoresPartida);
 			GestionRanking.actualizarRanking(jugadoresPartida);
-			GestionLog.FinPartidaLog(rondas, ganador(jugadoresPartida), jugadoresPartida);
+			GestionLog.finPartidaLog(rondas, ganador(jugadoresPartida), jugadoresPartida);
 
 		} catch (Exception e) {
 			System.out.println("Algo sucedio mal " + e.getMessage());
-			GestionLog.FalloLog(e.getMessage());
+			GestionLog.falloLog(e.getMessage());
 		}
 
 	}

@@ -28,13 +28,11 @@ public class GestionHistorico {
 				escribirFichero += jugador.getNombre() + " " + jugador.getPuntos() + " ";
 			}
 			escribirFichero += "\n";
-			// TODO ordenar el array de jugadores de la partida para añadirlo al archivo de
-			// ranking con los puntos ordenados
 			System.out.println("Escribiendo resultado de la partida en el Historico");
 			Files.write(Constantes.archivoHistorico, escribirFichero.getBytes(), StandardOpenOption.APPEND);
 		} catch (Exception e) {
 			System.out.println("**Error al escribir el resultado de la partida en el historico**" + e.getMessage());
-			GestionLog.FalloLog(e.getMessage());
+			GestionLog.falloLog(e.getMessage());
 		}
 	}
 	/**
@@ -50,7 +48,7 @@ public class GestionHistorico {
 			System.out.println("-- Fin del Historico");
 		} catch (Exception e) {
 			System.out.println("Fallo al leer el historico");
-			GestionLog.FalloLog(e.getMessage());
+			GestionLog.falloLog(e.getMessage());
 		}
 	}
 }

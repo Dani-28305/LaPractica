@@ -8,8 +8,10 @@ import java.util.Comparator;
 import java.util.List;
 
 import jugadores.Jugadores;
+
 /**
  * Clase que contiene la gestion del archivo de ranking del programa
+ * 
  * @author Daniel Castillo
  * @version 20240512
  */
@@ -27,9 +29,10 @@ public class GestionRanking {
 			System.out.println("-- Fin del Ranking");
 		} catch (Exception e) {
 			System.out.println("Fallo al leer el ranking");
-			GestionLog.FalloLog(e.getMessage());
+			GestionLog.falloLog(e.getMessage());
 		}
 	}
+
 	/**
 	 * Metodo para ordenar el ArrayList del ranking antes de escribirlo en el
 	 * archivo de Ranking
@@ -46,6 +49,7 @@ public class GestionRanking {
 			}
 		});
 	}
+
 	/**
 	 * Metodo para actualizar los puntos en el Ranking de las personas que han
 	 * disputado una partida
@@ -80,7 +84,7 @@ public class GestionRanking {
 
 		} catch (Exception e) {
 			System.out.println("Error al actualizar el ranking " + e.getMessage());
-			GestionLog.FalloLog(e.getMessage());
+			GestionLog.falloLog(e.getMessage());
 		}
 	}
 
@@ -95,7 +99,7 @@ public class GestionRanking {
 			Files.write(Constantes.archivoRanking, nombreNuevo.getBytes(), StandardOpenOption.APPEND);
 		} catch (Exception e) {
 			System.out.println("Error al inscibir al nuevo jugador en el ranking ");
-			GestionLog.FalloLog(e.getMessage());
+			GestionLog.falloLog(e.getMessage());
 		}
 	}
 
@@ -127,7 +131,7 @@ public class GestionRanking {
 			}
 		} catch (Exception e) {
 			System.out.println("Fallo al eliminar el jugador del ranking");
-			GestionLog.FalloLog(e.getMessage());
+			GestionLog.falloLog(e.getMessage());
 		}
 	}
 }
