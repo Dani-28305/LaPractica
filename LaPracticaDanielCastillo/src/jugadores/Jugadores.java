@@ -11,6 +11,7 @@ package jugadores;
 public abstract class Jugadores {
 	int puntos;
 	String nombre;
+	int racha;
 
 	/**
 	 * Metodo abracto para mostrar la informacion de cada jugador
@@ -28,6 +29,14 @@ public abstract class Jugadores {
 		super();
 		this.puntos = puntos;
 		this.nombre = nombre;
+	}
+
+	public int getRacha() {
+		return racha;
+	}
+
+	public void setRacha(int racha) {
+		this.racha = racha;
 	}
 
 	public int getPuntos() {

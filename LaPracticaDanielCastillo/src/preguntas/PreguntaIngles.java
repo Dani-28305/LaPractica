@@ -45,11 +45,13 @@ public class PreguntaIngles {
 		return numRandom;
 
 	}
-/**
- * Metodo para cambiar las letras de la respuesta por numeros
- * @param resp Parámetro que contiene la letra de la respuesta
- * @return numero entero equivalente de cada letra
- */
+
+	/**
+	 * Metodo para cambiar las letras de la respuesta por numeros
+	 * 
+	 * @param resp Parámetro que contiene la letra de la respuesta
+	 * @return numero entero equivalente de cada letra
+	 */
 	private static int cambiarLetra(String resp) {
 		int respInt = -1;
 		if (resp.equalsIgnoreCase("A") || resp.equalsIgnoreCase("a")) {
@@ -60,19 +62,25 @@ public class PreguntaIngles {
 			respInt = 2;
 		} else if (resp.equalsIgnoreCase("D") || resp.equalsIgnoreCase("d")) {
 			respInt = 3;
+		} else if (resp.equalsIgnoreCase("Comodin 50")) {
+			respInt = 4;
 		}
 
 		return respInt;
 	}
+
 /**
  * Metodo para generar preguntas de Ingles
  * @return true si se acierta la pregunta
  */
-	public static boolean generarPregunta() {
+	public static int generarPregunta() {
 		int preguntaInt = generarMultiplo5();
 		Scanner s1 = new Scanner(System.in);
+		Random r1 = new Random();
 		String correcta = arrayPreguntasIngles.get(preguntaInt + 1);
 		ArrayList<String> respuestas = new ArrayList<String>();
+		ArrayList<String> respuestas50 = new ArrayList<String>();
+		respuestas50=respuestas;
 		for (int i = 1; i < 5; i++) {
 			respuestas.add(arrayPreguntasIngles.get(preguntaInt + i));
 		}
@@ -82,22 +90,57 @@ public class PreguntaIngles {
 		System.out.println("B : " + respuestas.get(1));
 		System.out.println("C : " + respuestas.get(2));
 		System.out.println("D : " + respuestas.get(3));
+		System.out.println("COMODIN 50");
 		String resp = s1.nextLine();
 		int respInt = cambiarLetra(resp);
-		if (respInt == respuestas.indexOf(correcta)) {
-			System.out.println(Constantes.acierto);
-			return true;
-		} else {
-			System.out.println(Constantes.fallo + correcta);
-			return false;
+		if (respInt==4) {
+			int numRand = r1.nextInt(4);
+			int contRestas=0;
+			for (int i = 0;i<2;i++) {
+				if(numRand!=respuestas50.indexOf(correcta)) {
+					respuestas50.remove(numRand);
+					 numRand = r1.nextInt(3);
+					 contRestas++;
+				} else if(contRestas==0) {
+					numRand = r1.nextInt(4);
+					i--;
+				}else {
+					numRand = r1.nextInt(3);
+				}
+			}
+			Collections.shuffle(respuestas50);
+			System.out.println("A : " + respuestas.get(0));
+			System.out.println("B : " + respuestas.get(1));
+			resp = s1.nextLine();
+			respInt = cambiarLetra(resp);
+			if (respInt == respuestas50.indexOf(correcta)) {
+				System.out.println(Constantes.acierto);
+				return 1;
+			} else {
+				System.out.println(Constantes.fallo + correcta);
+				System.out.println("Se restara un punto");
+				return 2;
+			}
+		}else {
+			if (respInt == respuestas.indexOf(correcta)) {
+				System.out.println(Constantes.acierto);
+				return 1;
+			} else {
+				System.out.println(Constantes.fallo + correcta);
+				return 0;
+			}
 		}
+		
 
 	}
-/**
- * Metodo para generar pregunta de Ingles para la CPU
- * @param numeroAleatorio Parámetro que contiene la respuesta aleatoria de la CPU
- * @return true si acierta la pregunta
- */
+
+	/**
+	 * Metodo para generar pregunta de Ingles para la CPU
+	 * 
+	 * @param numeroAleatorio Parámetro que contiene la respuesta aleatoria de la
+	 *                        CPU
+	 * @return true si acierta la pregunta
+	 */
 	public static boolean generarPreguntaCPU(int numeroAleatorio) {
 		int preguntaInt = generarMultiplo5();
 		Scanner s1 = new Scanner(System.in);

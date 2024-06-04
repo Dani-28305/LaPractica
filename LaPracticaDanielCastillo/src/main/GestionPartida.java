@@ -9,6 +9,7 @@ import java.util.Scanner;
 import jugadores.CPU;
 import jugadores.Humanos;
 import jugadores.Jugadores;
+import preguntas.PreguntaAzar;
 import preguntas.PreguntaIngles;
 import preguntas.PreguntaLengua;
 import preguntas.PreguntaMates;
@@ -172,6 +173,7 @@ public class GestionPartida {
 		ArrayList<Jugadores> jugadoresPartida = preguntarJugadores();
 		Random r1 = new Random();
 		int numeroRandom;
+		GestionExportacionEstadisticas e1 = new GestionExportacionEstadisticas();
 		Collections.shuffle(jugadoresPartida);
 		int rondas = numRondas();
 		GestionLog.inicioPartidaLog(rondas, jugadoresPartida);
@@ -182,38 +184,127 @@ public class GestionPartida {
 					n.mostrar();
 				}
 				for (Jugadores n : jugadoresPartida) {
-					numeroRandom = r1.nextInt(0, 3);
+					numeroRandom = r1.nextInt(0, 4);
 
 					System.out.println("-- Turno de " + n.getNombre());
 					if (numeroRandom == 0) {
+						e1.setInglesRealizadas(e1.getInglesRealizadas()+1);
 						if (n instanceof CPU) {
 							System.out.println("La CPU ha elegido una repuesta al azar(como simpre...)");
 							int respuestaAleatoria = r1.nextInt(1, 5);
-							PreguntaIngles.generarPreguntaCPU(respuestaAleatoria);
-
-						} else if (PreguntaIngles.generarPregunta()) {
-							n.setPuntos(n.getPuntos() + 1);
+							boolean resultadoPreguntaIngles = PreguntaIngles.generarPreguntaCPU(respuestaAleatoria);
+							if(resultadoPreguntaIngles) {
+								n.setPuntos(n.getPuntos()+1);
+								n.setRacha(n.getRacha()+1);
+								e1.setInglesCorrectas(e1.getInglesCorrectas()+1);
+								if (n.getRacha() == 3) {
+									System.out.println(n.getNombre() + "ha acertado bien 3 seguidas, ganas 5 puntos");
+									n.setPuntos(n.getPuntos() + 5);
+									n.setRacha(0);
+								}
+							} else {
+								n.setRacha(0);
+							}
+						} else {
+							int resultadoPreguntaIngles = PreguntaIngles.generarPregunta();
+							if (resultadoPreguntaIngles == 1) {
+								e1.setInglesCorrectas(e1.getInglesCorrectas()+1);
+								n.setPuntos(n.getPuntos() + 1);
+								n.setRacha(n.getRacha() + 1);
+								if (n.getRacha() == 3) {
+									System.out.println(n.getNombre() + "ha acertado bien 3 seguidas, ganas 5 puntos");
+									n.setPuntos(n.getPuntos() + 5);
+									n.setRacha(0);
+								}
+							} else if (resultadoPreguntaIngles == 2) {
+								n.setPuntos(n.getPuntos() - 1);
+								n.setRacha(0);
+							} else {
+								n.setRacha(0);
+							}
 						}
 					} else if (numeroRandom == 1) {
+						e1.setLenguaRealizadas(e1.getLenguaRealizadas()+1);
 						if (n instanceof CPU) {
 							System.out.println("La CPU ha fallado su pregunta de Lengua(como simpre...)");
-						} else if (PreguntaLengua.generarPregunta()) {
-							n.setPuntos(n.getPuntos() + 1);
+						} else {
+							boolean acierto = PreguntaLengua.generarPregunta();
+							if (acierto) {
+								e1.setLenguaCorrectas(e1.getLenguaCorrectas()+1);
+								n.setPuntos(n.getPuntos() + 1);
+								n.setRacha(n.getRacha() + 1);
+								if (n.getRacha() == 3) {
+									System.out.println(n.getNombre() + "ha acertado bien 3 seguidas, ganas 5 puntos");
+									n.setPuntos(n.getPuntos() + 5);
+									n.setRacha(0);
+								}
+							} else {
+								n.setRacha(0);
+							}
+
 						}
 					} else if (numeroRandom == 2) {
+						e1.setMatesRealizadas(e1.getMatesRealizadas()+1);
 						if (n instanceof CPU) {
 							System.out.println("La CPU ha acertado su pregunta de Mates(como simpre...)");
+							e1.setMatesCorrectas(e1.getMatesCorrectas()+1);
 							n.setPuntos(n.getPuntos() + 1);
-						} else if (PreguntaMates.generarPregunta()) {
-							n.setPuntos(n.getPuntos() + 1);
+							n.setRacha(n.getRacha() + 1);
+							if (n.getRacha() == 3) {
+								System.out.println(n.getNombre() + "ha acertado bien 3 seguidas, ganas 5 puntos");
+								n.setPuntos(n.getPuntos() + 5);
+								n.setRacha(0);
+							}
+						} else {
+							boolean acierto = PreguntaMates.generarPregunta();
+							if (acierto) {
+								e1.setMatesCorrectas(e1.getMatesCorrectas()+1);
+								n.setPuntos(n.getPuntos() + 1);
+								n.setRacha(n.getRacha() + 1);
+								if (n.getRacha() == 3) {
+									System.out.println(n.getNombre() + "ha acertado bien 3 seguidas, ganas 5 puntos");
+									n.setPuntos(n.getPuntos() + 5);
+									n.setRacha(0);
+								}
+							} else {
+								n.setRacha(0);
+							}
 						}
-					}
+					} else if(numeroRandom==3)
+						if(n instanceof CPU) {
+							int cantidadAzar = PreguntaAzar.generarPreguntaCPU();
+							n.setPuntos(n.getPuntos()+cantidadAzar);
+							if(cantidadAzar==0) {
+								n.setRacha(0);
+							}else {
+								n.setRacha(n.getRacha() + 1);
+							}
+							if (n.getRacha() == 3) {
+								System.out.println(n.getNombre() + "ha acertado bien 3 seguidas, ganas 5 puntos");
+								n.setPuntos(n.getPuntos() + 5);
+								n.setRacha(0);
+							}
+						}else {
+							int cantidadAzar = PreguntaAzar.generarPregunta();
+							n.setPuntos(n.getPuntos()+cantidadAzar);
+							if(cantidadAzar==0) {
+								n.setRacha(0);
+							}else {
+								n.setRacha(n.getRacha() + 1);
+							}
+							if (n.getRacha() == 3) {
+								System.out.println(n.getNombre() + "ha acertado bien 3 seguidas, ganas 5 puntos");
+								n.setPuntos(n.getPuntos() + 5);
+								n.setRacha(0);
+							}
+						}
 				}
 			}
 			if (ganador(jugadoresPartida).equals("Empate")) {
 				System.out.println("Empate");
 			} else
 				System.out.println("El ganador de la partida a sido " + ganador(jugadoresPartida));
+			e1.escribirEstadisticas();
 			GestionHistorico.escribirHistorico(jugadoresPartida);
 			GestionRanking.actualizarRanking(jugadoresPartida);
 			GestionLog.finPartidaLog(rondas, ganador(jugadoresPartida), jugadoresPartida);

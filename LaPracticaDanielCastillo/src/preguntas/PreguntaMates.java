@@ -45,6 +45,7 @@ public class PreguntaMates {
 		Expression e = new ExpressionBuilder(expresion).build();
 		resultado = (int) e.evaluate();
 		System.out.println("Dime el resultado");
+		System.out.println(resultado);
 		try {
 			if (resultado == s1.nextInt()) {
 				System.out.println(Constantes.acierto);
